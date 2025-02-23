@@ -313,8 +313,7 @@ func drop_held_object():
 	held_object.remove_collision_exception_with(self)
 	held_object.reparent(get_tree().root, true)
 	# Offset drop position to avoid immediate pickup
-	var drop_offset = camera.global_transform.basis.z * -1.0
-	held_object.global_transform.origin = hold_position.global_transform.origin + drop_offset
+	held_object.global_transform.origin = hold_position.global_transform.origin
 	held_object = null
 	start_interaction_cooldown()
 
