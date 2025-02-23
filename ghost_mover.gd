@@ -1,6 +1,6 @@
 extends PathFollow3D
 
-@export var move_speed := 2.0  # Adjust this for overall speed
+@export var move_speed := .5  # Adjust this for overall speed
 var direction := 1  # 1 = forward, -1 = backward
 
 func _process(delta):

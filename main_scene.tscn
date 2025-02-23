@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://bd3ctvg0j1bvw"]
+[gd_scene load_steps=32 format=3 uid="uid://bd3ctvg0j1bvw"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_7g41f"]
 [ext_resource type="Texture2D" uid="uid://bjoxv2ipw578j" path="res://textures/PavingStones/PavingStones142_1K-PNG_Color.png" id="1_narlx"]
@@ -6,8 +6,11 @@
 [ext_resource type="Texture2D" uid="uid://c3632dfcio6iu" path="res://textures/PavingStones/PavingStones142_1K-PNG_NormalGL.png" id="2_sehpd"]
 [ext_resource type="Texture2D" uid="uid://bp8hn68q6vylg" path="res://textures/PavingStones/PavingStones142_1K-PNG_Roughness.png" id="3_ou8la"]
 [ext_resource type="Script" path="res://scripts/Interactable.gd" id="5_21tw2"]
+[ext_resource type="Texture2D" uid="uid://badomane0cjuv" path="res://textures/Dark_Wood/WoodFloor048_1K-JPG_Color.jpg" id="5_opipg"]
 [ext_resource type="Script" path="res://ghost_mover.gd" id="5_yari8"]
 [ext_resource type="Script" path="res://smoke_detection.gd" id="7_xw1fl"]
+[ext_resource type="Script" path="res://RoomTemp.gd" id="8_ymibw"]
+[ext_resource type="Script" path="res://temp_display.gd" id="10_5adsi"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_43kfi"]
 size = Vector3(1000, 0.5, 1000)
@@ -26,7 +29,11 @@ uv1_scale = Vector3(1000, 1000, 1000)
 material = SubResource("StandardMaterial3D_iuv5v")
 size = Vector3(1000, 0.5, 1000)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cbx66"]
+albedo_texture = ExtResource("5_opipg")
+
 [sub_resource type="BoxMesh" id="BoxMesh_8vhhv"]
+material = SubResource("StandardMaterial3D_cbx66")
 size = Vector3(10, 3.5, 0.2)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_1vpx8"]
@@ -43,7 +50,7 @@ radius = 0.25
 
 [sub_resource type="Curve3D" id="Curve3D_3gbdf"]
 _data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 2.36516, 0, 0.585, 0, 0, 0, 0, 0, 0, -2.6092, 0, 0.911822, 0, 0, 0, 0, 0, 0, -4.41472, 0, -7.78657, 0, 0, 0, 0, 0, 0, 5.468, 0, -6.23),
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -0.148397, 0, 0.585, 0, 0, 0, 0, 0, 0, -13.7122, -0.226406, 1.9198, 0, 0, 0, 0, 0, 0, -9.69225, 0, -7.78657, 0, 0, 0, 0, 0, 0, 5.468, 0, -6.23),
 "tilts": PackedFloat32Array(0, 0, 0, 0)
 }
 point_count = 4
@@ -62,10 +69,26 @@ height = 0.2
 radius = 0.1
 height = 0.2
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_fvelk"]
+[sub_resource type="CylinderMesh" id="CylinderMesh_8rdld"]
+top_radius = 0.01
+bottom_radius = 0.01
+height = 0.15
 
-[sub_resource type="QuadMesh" id="QuadMesh_syat3"]
-size = Vector2(0.05, 0.05)
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_fvelk"]
+lifetime_randomness = 1.0
+emission_shape = 1
+emission_sphere_radius = 0.01
+direction = Vector3(0, 1, 0)
+spread = 3.0
+gravity = Vector3(0, -5, 0)
+
+[sub_resource type="BoxMesh" id="BoxMesh_sf6lx"]
+size = Vector3(0.01, 0.01, 0.01)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6j8x7"]
+size = Vector3(10, 8, 10)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_sobhp"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wt4ky"]
 height = 1.8
@@ -93,7 +116,6 @@ shape = SubResource("BoxShape3D_43kfi")
 mesh = SubResource("BoxMesh_wuavy")
 
 [node name="TestRoom" type="Node3D" parent="Environment"]
-visible = false
 
 [node name="Walls" type="Node3D" parent="Environment/TestRoom"]
 
@@ -145,18 +167,18 @@ visible = false
 mesh = SubResource("CapsuleMesh_2yyhs")
 
 [node name="GhostPath_linear_test" type="Path3D" parent="Ghosts"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.35944, 1.09788, -1.4906)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.78081, 1.09788, -1.4906)
 curve = SubResource("Curve3D_3gbdf")
 
 [node name="GhostMover" type="PathFollow3D" parent="Ghosts/GhostPath_linear_test"]
-transform = Transform3D(-0.0655593, 0, 0.997837, 0, 1, 0, -0.997837, 0, -0.0655593, 2.36516, 0, 0.585)
+transform = Transform3D(-0.0979346, -0.0165295, 0.995037, -1.86261e-09, 0.999861, 0.0166091, -0.995175, 0.00162666, -0.097921, -0.148397, 0, 0.585)
 script = ExtResource("5_yari8")
 
 [node name="Ghost_move_linear" type="CharacterBody3D" parent="Ghosts/GhostPath_linear_test/GhostMover" groups=["Ghosts"]]
-transform = Transform3D(-0.0734336, 0.00194282, -0.997301, -0.0159282, 0.999868, 0.00312066, 0.997175, 0.0161144, -0.073393, 0.911302, 0.0692939, -4.40945)
+transform = Transform3D(-0.0734336, 0.00194282, -0.997301, -0.0159282, 0.999868, 0.00312066, 0.997175, 0.0161144, -0.073393, 0.262248, 0.0692939, 0.344174)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ghosts/GhostPath_linear_test/GhostMover/Ghost_move_linear"]
-transform = Transform3D(1, 4.33647e-09, 0, -3.25963e-09, 1, 0, 0, 0, 1, 4.92684, 0.0763515, 0.683959)
+transform = Transform3D(1, 8.91851e-09, 0, -4.23825e-09, 1, 0, 0, 0, 1, 0.0573692, 0.00041163, 0.16085)
 mesh = SubResource("CapsuleMesh_2yyhs")
 
 [node name="Objects" type="Node3D" parent="."]
@@ -209,14 +231,54 @@ script = ExtResource("5_21tw2")
 shape = SubResource("CapsuleShape3D_mu4ev")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Objects/smoke/TestObject_smoke"]
-mesh = SubResource("CapsuleMesh_ixanp")
+mesh = SubResource("CylinderMesh_8rdld")
 
 [node name="Smoke_detection" type="GPUParticles3D" parent="Objects/smoke/TestObject_smoke"]
-amount = 50
+transform = Transform3D(1, 0, -2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 0.00115776, 0.0793508, 0.00189471)
+amount = 25
 preprocess = 2.0
 process_material = SubResource("ParticleProcessMaterial_fvelk")
-draw_pass_1 = SubResource("QuadMesh_syat3")
+draw_pass_1 = SubResource("BoxMesh_sf6lx")
 script = ExtResource("7_xw1fl")
+
+[node name="ColdSpots" type="Node" parent="Objects"]
+
+[node name="ColdArea" type="Area3D" parent="Objects/ColdSpots"]
+script = ExtResource("8_ymibw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Objects/ColdSpots/ColdArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000680923, 3.82937, -0.740553)
+shape = SubResource("BoxShape3D_6j8x7")
+
+[node name="Pedastel" type="StaticBody3D" parent="Objects/ColdSpots"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.14816, 1.29226, -7.04794)
+collision_layer = 8
+collision_mask = 15
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Objects/ColdSpots/Pedastel"]
+mesh = SubResource("BoxMesh_gk8o4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Objects/ColdSpots/Pedastel"]
+shape = SubResource("BoxShape3D_8dcr4")
+
+[node name="TestObject_Temp" type="RigidBody3D" parent="Objects/ColdSpots"]
+transform = Transform3D(0.26623, 0, -0.963912, 0, 1, 0, 0.963912, 0, 0.26623, 4.06634, 2.4844, -5.63267)
+collision_layer = 2
+collision_mask = 14
+script = ExtResource("5_21tw2")
+
+[node name="Temp_Display" type="Node3D" parent="Objects/ColdSpots/TestObject_Temp"]
+script = ExtResource("10_5adsi")
+
+[node name="Temp_Area" type="Area3D" parent="Objects/ColdSpots/TestObject_Temp/Temp_Display"]
+
+[node name="Area3D" type="CollisionShape3D" parent="Objects/ColdSpots/TestObject_Temp/Temp_Display/Temp_Area"]
+shape = SubResource("SphereShape3D_sobhp")
+
+[node name="Display_label" type="Label3D" parent="Objects/ColdSpots/TestObject_Temp/Temp_Display"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Objects/ColdSpots/TestObject_Temp"]
+shape = SubResource("CapsuleShape3D_mu4ev")
 
 [node name="Players" type="Node3D" parent="."]
 
@@ -243,4 +305,4 @@ target_position = Vector3(0, 0, -3)
 collision_mask = 7
 
 [node name="HoldPosition" type="Node3D" parent="Players/Player/PlayerCamera"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.673385)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.561342, -0.0520058, -0.913644)
