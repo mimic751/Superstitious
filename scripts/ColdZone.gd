@@ -7,7 +7,7 @@ extends Area3D
 @export var raising_rate: float = 0.01            # Degrees per second rise when ghost is absent
 
 # Internal Variables
-var current_temperature: float
+@export var current_temperature: float
 
 # Custom Signal
 signal temperature_changed(new_temp)
