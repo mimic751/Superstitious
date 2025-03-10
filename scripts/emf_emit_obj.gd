@@ -18,6 +18,8 @@ func _ready():
 	add_child(pulse_timer)
 	pulse_timer.start()
 
+
+
 func interact():
 	if not picked_up:  # Only toggle power if the object isn't being held
 		toggle_power()
@@ -25,7 +27,7 @@ func interact():
 func toggle_power():
 	is_powered = !is_powered
 	current_emf = base_emf if is_powered else 0.0
-	print("Device toggled:", is_powered)
+	print("Power:", is_powered)
 
 func _on_pulse_timer_timeout():
 	if is_powered:
