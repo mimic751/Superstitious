@@ -248,6 +248,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.48336, 1.09526, -3.41989)
 collision_layer = 128
 collision_mask = 81
 script = ExtResource("7_r58q3")
+activity_rate = null
+decay_rate = null
+activity_level = null
+visibility_min_factor = null
+visibility_fluctuation_speed = null
+visibility_fluctuation_intensity = null
 
 [node name="Ghost_mesh" type="MeshInstance3D" parent="Ghosts/Ghost_Static"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00777054, 1.19209e-07, 0.0115609)
@@ -274,6 +280,12 @@ transform = Transform3D(-0.0734336, 0.00194282, -0.997301, -0.0159282, 0.999868,
 collision_layer = 128
 collision_mask = 81
 script = ExtResource("7_r58q3")
+activity_rate = null
+decay_rate = null
+activity_level = null
+visibility_min_factor = null
+visibility_fluctuation_speed = null
+visibility_fluctuation_intensity = null
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ghosts/GhostPath_linear_test/GhostMover/Ghost_move_linear"]
 transform = Transform3D(1, 8.92032e-09, 0, -4.25644e-09, 1, 0, -1.86265e-09, 0, 1, 0.0612077, 0.000705957, 0.00480509)
@@ -563,6 +575,7 @@ distance_fade_begin = 0.0
 distance_fade_shadow = 3.0
 distance_fade_length = 3.0
 script = ExtResource("21_vqs8e")
+flicker_strength = 2.0
 
 [node name="DetectionArea" type="Area3D" parent="Test_Objects/GhostLight/TestObject_GhostLight"]
 transform = Transform3D(1, 0, -2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 0.0490952, 0, -0.0524693)

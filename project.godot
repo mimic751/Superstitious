@@ -84,10 +84,13 @@ Grab={
 
 [layer_names]
 
+3d_render/layer_3="ghost_shader"
+3d_render/layer_8="Ghost"
 3d_physics/layer_1="Player"
 3d_physics/layer_2="Int_obj"
 3d_physics/layer_3="Env"
 3d_physics/layer_4="furnature"
 3d_physics/layer_5="areas"
 3d_physics/layer_6="Wind_obj"
+3d_physics/layer_7="Detection"
 3d_physics/layer_8="Ghost"

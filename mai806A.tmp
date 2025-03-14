@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://bd3ctvg0j1bvw"]
+[gd_scene load_steps=56 format=3 uid="uid://bd3ctvg0j1bvw"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_7g41f"]
 [ext_resource type="Texture2D" uid="uid://bjoxv2ipw578j" path="res://textures/PavingStones/PavingStones142_1K-PNG_Color.png" id="1_narlx"]
@@ -22,7 +22,7 @@
 [ext_resource type="Script" path="res://scripts/emf_emit_obj.gd" id="12_urbmf"]
 [ext_resource type="Texture2D" uid="uid://bqf5tfywdcxbt" path="res://textures/Crosshairs/PNG/Outline Retina/crosshair043.png" id="12_xnmad"]
 [ext_resource type="Script" path="res://scripts/Ghost_flashlight.gd" id="19_2r35v"]
-[ext_resource type="Script" path="res://scripts/Ghost_light.gd" id="21_vqs8e"]
+[ext_resource type="Script" path="res://scripts/Ghost_light.gd" id="21_0h3np"]
 
 [sub_resource type="Environment" id="Environment_kagdt"]
 ambient_light_source = 2
@@ -67,13 +67,12 @@ data = PackedVector3Array(-5, 1.75, 0.1, 5, 1.75, 0.1, -5, -1.75, 0.1, 5, 1.75, 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6j8x7"]
 size = Vector3(10, 8, 10)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_yru7r"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nwr6b"]
 render_priority = 0
 shader = ExtResource("10_n65d0")
-shader_parameter/noise_intensity = 1.128
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_gsojh"]
-material = SubResource("ShaderMaterial_yru7r")
+material = SubResource("ShaderMaterial_nwr6b")
 radius = 0.25
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_7euku"]
@@ -141,6 +140,22 @@ spread = 3.0
 gravity = Vector3(0, -5, 0)
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_l1i2g"]
+
+[sub_resource type="Gradient" id="Gradient_xjm3s"]
+interpolation_mode = 2
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ktcyr"]
+frequency = 0.0191
+fractal_type = 2
+domain_warp_enabled = true
+domain_warp_type = 2
+domain_warp_frequency = 5.0
+domain_warp_fractal_octaves = 1
+domain_warp_fractal_gain = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ae3jf"]
+color_ramp = SubResource("Gradient_xjm3s")
+noise = SubResource("FastNoiseLite_ktcyr")
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wt4ky"]
 height = 1.8
@@ -281,9 +296,7 @@ shape = SubResource("ConcavePolygonShape3D_vyifl")
 
 [node name="Ghost_mesh" type="MeshInstance3D" parent="Ghosts/GhostPath_linear_test/GhostMover/Ghost_move_linear"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00777054, 1.19209e-07, 0.0115609)
-layers = 4
-cast_shadow = 0
-ignore_occlusion_culling = true
+layers = 128
 gi_mode = 0
 mesh = SubResource("CapsuleMesh_gsojh")
 
@@ -552,9 +565,19 @@ mesh = SubResource("CapsuleMesh_ixanp")
 transform = Transform3D(0.473519, 0, -0.880783, 0, 1, 0, 0.880783, 0, 0.473519, 0.0130644, 0, -0.0602779)
 light_cull_mask = 4294967163
 
+[node name="RayCast3D" type="RayCast3D" parent="Test_Objects/GhostLight/TestObject_GhostLight"]
+
+[node name="DetectionArea" type="Area3D" parent="Test_Objects/GhostLight/TestObject_GhostLight"]
+collision_mask = 129
+
+[node name="CollisionShape3d" type="CollisionShape3D" parent="Test_Objects/GhostLight/TestObject_GhostLight/DetectionArea"]
+transform = Transform3D(5, 1.19209e-07, 0, 0, -2.18557e-07, -5, -1.19209e-07, 5, -2.18557e-07, 0.138467, 0, -4.95439)
+shape = SubResource("CylinderShape3D_l1i2g")
+
 [node name="GhostHighlightLight3D" type="SpotLight3D" parent="Test_Objects/GhostLight/TestObject_GhostLight"]
 transform = Transform3D(0.473519, 0, -0.880783, 0, 1, 0, 0.880783, 0, 0.473519, -0.0360303, 0, -0.00780869)
 layers = 4
+light_projector = SubResource("NoiseTexture2D_ae3jf")
 light_cull_mask = 4293918724
 shadow_enabled = true
 shadow_opacity = 0.0
@@ -562,15 +585,7 @@ distance_fade_enabled = true
 distance_fade_begin = 0.0
 distance_fade_shadow = 3.0
 distance_fade_length = 3.0
-script = ExtResource("21_vqs8e")
-
-[node name="DetectionArea" type="Area3D" parent="Test_Objects/GhostLight/TestObject_GhostLight"]
-transform = Transform3D(1, 0, -2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 0.0490952, 0, -0.0524693)
-collision_mask = 129
-
-[node name="CollisionShape3d" type="CollisionShape3D" parent="Test_Objects/GhostLight/TestObject_GhostLight/DetectionArea"]
-transform = Transform3D(5, 1.19209e-07, 0, 0, -2.18557e-07, -5, -1.19209e-07, 5, -2.18557e-07, 0.138467, 0, -4.95439)
-shape = SubResource("CylinderShape3D_l1i2g")
+script = ExtResource("21_0h3np")
 
 [node name="Players" type="Node3D" parent="."]
 
